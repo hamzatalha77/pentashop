@@ -19,6 +19,20 @@ const getProducts = asyncHandler(async (req, res) => {
   // throw new Error('someError')
   res.json({ products, page, pages: Math.ceil(count / pageSize) })
 })
+
+// const getProductsWithCat = asyncHandler(async (req, res) => {
+//   let category = req.params.category
+
+//   const products = await Product.find({ category: category })
+
+//   res.json({ products })
+// })
+// const getProductsByCategory = asyncHandler(async (req, res) => {
+//   const categoryName = req.path.replace(/\//g, '').replace('category', '')
+//   const products = await Product.find({ category: categoryName })
+
+//   res.json(products)
+// })
 const getProductById = asyncHandler(async (req, res) => {
   const product = await Product.findById(req.params.id)
   if (product) {
@@ -38,24 +52,29 @@ const deleteProduct = asyncHandler(async (req, res) => {
     throw new Error('product not found')
   }
 })
-const createProduct = asyncHandler(async (req, res) => {
-  const product = new Product({
-    name: 'Sample name',
-    price: 0,
-    user: req.user._id,
-    image: '/images/sample.jpg',
-    brand: 'Sample brand',
-    category: 'Sample category',
-    countInStock: 0,
-    numReviews: 0,
-    description: 'Sample description',
-  })
-  const createdProduct = await product.save()
-  res.status(201).json(createdProduct)
+const createProduct = asyncHandler(async (req, res, next) => {
+  try {
+    // console.log(req.body.images)
+    const product = new Product({
+      user: req.user._id,
+      name: req.body.name,
+      price: req.body.price,
+      description: req.body.description,
+      images: req.body.images,
+      brand: req.body.brand,
+      categories: req.body.categories,
+      countInStock: req.body.countInStock,
+    })
+
+    const createdProduct = await product.save()
+    res.status(201).json(createdProduct)
+  } catch (error) {
+    res.status(400).send(error.message)
+  }
 })
 
 const updateProduct = asyncHandler(async (req, res) => {
-  const { name, price, description, image, brand, category, countInStock } =
+  const { name, price, description, image, brand, categories, countInStock } =
     req.body
 
   const product = await Product.findById(req.params.id)
@@ -66,7 +85,7 @@ const updateProduct = asyncHandler(async (req, res) => {
     product.description = description
     product.image = image
     product.brand = brand
-    product.category = category
+    product.categories = categories
     product.countInStock = countInStock
 
     const updatedProduct = await product.save()

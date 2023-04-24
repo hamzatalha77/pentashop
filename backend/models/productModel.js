@@ -23,23 +23,19 @@ const productSchema = mongoose.Schema(
     },
     name: {
       type: String,
-      required: true,
     },
     image: {
       type: String,
-      required: true,
+    },
+    cloudinary_id: {
+      type: String,
     },
     brand: {
       type: String,
-      required: true,
     },
-    category: {
-      type: String,
-      required: true,
-    },
+    categories: { type: Array },
     description: {
       type: String,
-      required: true,
     },
     reviews: [reviewSchema],
     rating: {
@@ -54,12 +50,10 @@ const productSchema = mongoose.Schema(
     },
     price: {
       type: Number,
-      required: true,
-      default: 0,
     },
     countInStock: {
       type: Number,
-      required: true,
+
       default: 0,
     },
   },
