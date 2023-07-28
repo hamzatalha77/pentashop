@@ -8,8 +8,8 @@ const reviewSchema = mongoose.Schema(
     user: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
-      ref: 'User',
-    },
+      ref: 'User'
+    }
   },
   { timestamps: true }
 )
@@ -19,43 +19,43 @@ const productSchema = mongoose.Schema(
     user: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
-      ref: 'User',
+      ref: 'User'
     },
     name: {
-      type: String,
+      type: String
     },
     image: {
-      type: String,
+      type: String
     },
     cloudinary_id: {
-      type: String,
+      type: String
     },
     brand: {
-      type: String,
+      type: String
     },
     categories: { type: Array },
     description: {
-      type: String,
+      type: String
     },
     reviews: [reviewSchema],
     rating: {
       type: Number,
       required: true,
-      default: 0,
+      default: 0
     },
     numReviews: {
       type: Number,
       required: true,
-      default: 0,
+      default: 0
     },
     price: {
-      type: Number,
+      type: Number
     },
     countInStock: {
       type: Number,
 
-      default: 0,
-    },
+      default: 0
+    }
   },
   { timestamps: true }
 )
