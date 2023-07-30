@@ -7,7 +7,7 @@ import {
   createProduct,
   updateProduct,
   createProductReview,
-  getTopProducts,
+  getTopProducts
 } from '../controllers/productController.js'
 import { protect, admin } from '../middleware/authMiddleWare.js'
 router.route('/').get(getProducts).post(protect, admin, createProduct)
